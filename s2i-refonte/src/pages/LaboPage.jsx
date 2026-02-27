@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   ChevronLeft, Search, Box, Zap, Settings, 
-  Eye, FileText, Info, Cpu, Database 
+  Eye, FileText, Cpu, BookOpen 
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 
@@ -51,14 +51,14 @@ export default function LaboPage() {
       
       <div className="max-w-7xl mx-auto px-6 py-12">
         <Link to="/" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-indigo-600 mb-8 transition-colors group">
-          <ChevronLeft size={18} className="mr-1 group-hover:-translate-x-1 transition-transform" /> Retour à l'accueil
+          <ChevronLeft size={18} className="mr-1 group-hover:-translate-x-1 transition-transform" /> 
+          Retour à l'accueil
         </Link>
 
-        {/* Header avec Barre de Recherche */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-16">
           <div>
             <h1 className="text-5xl font-black text-gray-900 tracking-tight uppercase">Laboratoire S2I</h1>
-            <p className="text-gray-500 mt-2 text-lg">Explorez les systèmes et la culture technique du labo.</p>
+            <p className="text-gray-500 mt-2 text-lg">Systèmes et culture technique du laboratoire.</p>
           </div>
           
           <div className="relative w-full lg:w-96">
@@ -66,13 +66,12 @@ export default function LaboPage() {
             <input 
               type="text"
               placeholder="Rechercher un système..."
-              className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none shadow-sm transition-all"
+              className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm transition-all text-gray-900"
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
         </div>
 
-        {/* Section Culture Technique */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
           {CULTURE_DOCS.map((doc, i) => (
             <motion.div 
@@ -88,7 +87,6 @@ export default function LaboPage() {
           ))}
         </div>
 
-        {/* Grille des Systèmes */}
         <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-2">
           <Cpu className="text-indigo-600" /> Systèmes disponibles
         </h2>
@@ -113,12 +111,13 @@ export default function LaboPage() {
                   {system.description}
                 </p>
                 
-                <div className="grid grid-cols-2 gap-3">
-                  <button className="flex items-center justify-center gap-2 bg-gray-50 hover:bg-indigo-50 text-gray-600 hover:text-indigo-600 py-3 rounded-xl text-xs font-bold transition-all">
-                    <FileText size={14} /> Dossier Tech
+                {/* Boutons côte à côte avec le même style sobre */}
+                <div className="flex flex-row gap-3">
+                  <button className="flex-1 flex items-center justify-center gap-2 bg-gray-50 hover:bg-indigo-50 text-gray-600 hover:text-indigo-600 py-3 rounded-xl text-[10px] font-bold transition-all uppercase tracking-tighter">
+                    <FileText size={14} /> Technique
                   </button>
-                  <button className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl text-xs font-bold transition-all">
-                    <Info size={14} /> Utilisation
+                  <button className="flex-1 flex items-center justify-center gap-2 bg-gray-50 hover:bg-indigo-50 text-gray-600 hover:text-indigo-600 py-3 rounded-xl text-[10px] font-bold transition-all uppercase tracking-tighter">
+                    <BookOpen size={14} /> Ressource
                   </button>
                 </div>
               </div>
