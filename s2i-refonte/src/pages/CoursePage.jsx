@@ -55,7 +55,7 @@ const ResourceColumn = ({ title, icon: Icon, resources, colorClass, bgColor }) =
               <span className="bg-gray-50 px-1.5 py-0.5 rounded">{res.type}</span>
             </div>
             {res.category === "TD" && res.hasCorrection && (
-              <button className="flex items-center gap-1.5 text-emerald-600 hover:text-emerald-700 font-semibold text-[11px] transition-all group/corrige hover:translate-x-0.5">
+              <button className="flex items-center gap-1.5 text-emerald-600 hover:text-emerald-700 font-semibold text-[11px] transition-all group/corrige hover:translate-x-0.5 border border-emerald-100 bg-emerald-50/50 px-2 py-1 rounded-lg">
                 <CheckSquare size={13} className="shrink-0" /> Corrigé
               </button>
             )}
