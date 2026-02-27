@@ -16,6 +16,7 @@ export default function Navbar() {
 
       {/* Menu de navigation 100% homogène */}
       <div className="hidden lg:flex gap-10 text-[13px] font-bold text-gray-500 uppercase tracking-wider">
+        <Link to="/journal" className="hover:text-indigo-600 transition-colors">Journal</Link>
         <Link to="/course/pcsi" className="hover:text-indigo-600 transition-colors">Filière PCSI</Link>
         <Link to="/course/mpsi" className="hover:text-indigo-600 transition-colors">Filière MPSI / MP</Link>
         <Link to="/labo" className="hover:text-indigo-600 transition-colors">Laboratoire</Link>

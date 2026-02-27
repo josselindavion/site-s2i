@@ -4,8 +4,9 @@ import Navbar from './components/Navbar';
 import CourseCard from './components/CourseCard';
 import CoursePage from './pages/CoursePage';
 import LaboPage from './pages/LaboPage';
-import TipePage from './pages/TipePage'; // 1. Nouvel Import
-import { BookOpen, Cpu, FlaskConical, Database, Lightbulb } from 'lucide-react'; // 2. Ajout Lightbulb
+import TipePage from './pages/TipePage'; 
+import JournalPage from './pages/JournalPage'; // 1. Import du Carnet de bord
+import { BookOpen, Cpu, FlaskConical, Database, Lightbulb, Activity } from 'lucide-react'; // 2. Ajout Activity
 
 const Home = () => (
   <main className="max-w-6xl mx-auto px-6 py-20">
@@ -32,8 +33,11 @@ const Home = () => (
       </div>
     </div>
 
-    {/* Grille de Navigation Mise à jour (5 cartes) */}
+    {/* Grille de Navigation Mise à jour (6 cartes) */}
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <Link to="/journal"> {/* 3. Nouvelle Carte Journal */}
+        <CourseCard title="Carnet de bord" description="Suivi quotidien des séances et activités." Icon={Activity} />
+      </Link>
       <Link to="/course/pcsi">
         <CourseCard title="Filière PCSI" description="Ressources de 1ère année." Icon={FlaskConical} />
       </Link>
@@ -43,7 +47,7 @@ const Home = () => (
       <Link to="/labo">
         <CourseCard title="Laboratoire" description="Systèmes et fiches techniques." Icon={Cpu} />
       </Link>
-      <Link to="/tipe"> {/* 3. Nouvelle Carte TIPE */}
+      <Link to="/tipe">
         <CourseCard title="TIPE" description="Calendrier, ressources et dépôts." Icon={Lightbulb} />
       </Link>
       <Link to="/course/archives">
@@ -68,7 +72,8 @@ const AnimatedRoutes = () => {
           <Route path="/" element={<Home />} />
           <Route path="/course/:id" element={<CoursePage />} />
           <Route path="/labo" element={<LaboPage />} />
-          <Route path="/tipe" element={<TipePage />} /> {/* 4. Nouvelle Route */}
+          <Route path="/tipe" element={<TipePage />} />
+          <Route path="/journal" element={<JournalPage />} /> {/* 4. Nouvelle Route */}
         </Routes>
       </motion.div>
     </AnimatePresence>
