@@ -5,7 +5,6 @@ import {
   ChevronLeft, Book, FileText, Download, 
   Zap, CheckCircle2, History, Settings, CheckSquare, ChevronDown 
 } from 'lucide-react';
-import Navbar from '../components/Navbar';
 
 const COURSE_DATA = {
   pcsi: {
@@ -146,7 +145,6 @@ export default function CoursePage() {
 
   return (
     <div className="min-h-screen bg-[#F9FAFB]">
-      <Navbar />
       <div className="max-w-7xl mx-auto px-6 py-12">
         <Link to="/" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-indigo-600 mb-6 transition-colors group">
           <ChevronLeft size={18} className="mr-1 group-hover:-translate-x-1 transition-transform" /> Retour à l'accueil

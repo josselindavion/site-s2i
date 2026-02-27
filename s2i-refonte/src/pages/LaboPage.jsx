@@ -5,7 +5,6 @@ import {
   ChevronLeft, Search, Box, Zap, Settings, 
   Eye, FileText, Cpu, BookOpen, X, ArrowRight, Download
 } from 'lucide-react';
-import Navbar from '../components/Navbar';
 
 // --- DONNÉES DE CULTURE TECHNIQUE AVEC LIENS PDF ---
 const CULTURE_DATA = {
@@ -47,7 +46,6 @@ const CULTURE_DATA = {
   }
 };
 
-// ... (SYSTEMS reste inchangé)
 const SYSTEMS = [
   { id: 'maxpid', name: 'Système Maxpid', category: 'Robotique', description: 'Bras manipulateur asservi en position pour l\'étude des SLCI.', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=400' },
   { id: 'cordeuse', name: 'Cordeuse de Raquette', category: 'Automatique', description: 'Système de tension de cordage avec régulation de force.', image: 'https://images.unsplash.com/photo-1530648672449-81f6c723e2f1?auto=format&fit=crop&q=80&w=400' },
@@ -64,15 +62,13 @@ export default function LaboPage() {
 
   return (
     <div className="min-h-screen bg-[#F9FAFB]">
-      <Navbar />
-      
       <div className="max-w-7xl mx-auto px-6 py-12">
         <Link to="/" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-indigo-600 mb-8 transition-colors group">
           <ChevronLeft size={18} className="mr-1 group-hover:-translate-x-1 transition-transform" /> 
           Retour à l'accueil
         </Link>
 
-        {/* Header (Inchangé) */}
+        {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-16">
           <div>
             <h1 className="text-5xl font-black text-gray-900 tracking-tight uppercase">Laboratoire S2I</h1>
@@ -107,7 +103,6 @@ export default function LaboPage() {
                   <p className="text-indigo-200 max-w-xl">{CULTURE_DATA[selectedCulture].description}</p>
                 </div>
                 
-                {/* NOUVEAU BOUTON DE TÉLÉCHARGEMENT PDF */}
                 <div className="flex items-center gap-3">
                   <a 
                     href={CULTURE_DATA[selectedCulture].pdfUrl}
@@ -122,8 +117,6 @@ export default function LaboPage() {
                 </div>
               </div>
 
-              {/* Grille des items technique */}
-              
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {CULTURE_DATA[selectedCulture].items.map((item, i) => (
                   <div key={i} className="bg-white/5 border border-white/10 p-5 rounded-2xl hover:bg-white/10 transition-all group">
@@ -137,7 +130,6 @@ export default function LaboPage() {
               </div>
             </motion.div>
           ) : (
-            // ... (GRILLE DES SYSTÈMES - Inchangée)
             <motion.div key="systems-grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-2">
                 <Cpu className="text-indigo-600" /> Systèmes disponibles
