@@ -14,11 +14,13 @@ export default function Navbar() {
         </div>
       </Link>
 
+      {/* Menu de navigation 100% homogène */}
       <div className="hidden lg:flex gap-10 text-[13px] font-bold text-gray-500 uppercase tracking-wider">
         <Link to="/course/pcsi" className="hover:text-indigo-600 transition-colors">Filière PCSI</Link>
         <Link to="/course/mpsi" className="hover:text-indigo-600 transition-colors">Filière MPSI / MP</Link>
         <Link to="/labo" className="hover:text-indigo-600 transition-colors">Laboratoire</Link>
-        <Link to="/course/archives" className="hover:text-indigo-600 transition-colors text-gray-300">Archives</Link>
+        <Link to="/tipe" className="hover:text-indigo-600 transition-colors">TIPE</Link>
+        <Link to="/course/archives" className="hover:text-indigo-600 transition-colors">Archives</Link>
       </div>
 
       <div className="flex items-center gap-4">

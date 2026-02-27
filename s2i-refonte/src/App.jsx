@@ -4,7 +4,8 @@ import Navbar from './components/Navbar';
 import CourseCard from './components/CourseCard';
 import CoursePage from './pages/CoursePage';
 import LaboPage from './pages/LaboPage';
-import { BookOpen, Cpu, FlaskConical, Database } from 'lucide-react';
+import TipePage from './pages/TipePage'; // 1. Nouvel Import
+import { BookOpen, Cpu, FlaskConical, Database, Lightbulb } from 'lucide-react'; // 2. Ajout Lightbulb
 
 const Home = () => (
   <main className="max-w-6xl mx-auto px-6 py-20">
@@ -23,7 +24,6 @@ const Home = () => (
           Il s'agit d'un espace à destination des étudiants et des collègues pour centraliser les documents de l'année.
         </p>
         
-        {/* Signature centrée avec une petite ligne au-dessus */}
         <div className="flex justify-center pt-8">
           <p className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] border-t border-gray-100 pt-6 px-12">
             Franck ACHARD — Professeur de S2I
@@ -32,8 +32,8 @@ const Home = () => (
       </div>
     </div>
 
-    {/* Grille de Navigation Directe */}
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    {/* Grille de Navigation Mise à jour (5 cartes) */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <Link to="/course/pcsi">
         <CourseCard title="Filière PCSI" description="Ressources de 1ère année." Icon={FlaskConical} />
       </Link>
@@ -42,6 +42,9 @@ const Home = () => (
       </Link>
       <Link to="/labo">
         <CourseCard title="Laboratoire" description="Systèmes et fiches techniques." Icon={Cpu} />
+      </Link>
+      <Link to="/tipe"> {/* 3. Nouvelle Carte TIPE */}
+        <CourseCard title="TIPE" description="Calendrier, ressources et dépôts." Icon={Lightbulb} />
       </Link>
       <Link to="/course/archives">
         <CourseCard title="Archives" description="Annales et documents passés." Icon={Database} />
@@ -65,6 +68,7 @@ const AnimatedRoutes = () => {
           <Route path="/" element={<Home />} />
           <Route path="/course/:id" element={<CoursePage />} />
           <Route path="/labo" element={<LaboPage />} />
+          <Route path="/tipe" element={<TipePage />} /> {/* 4. Nouvelle Route */}
         </Routes>
       </motion.div>
     </AnimatePresence>
