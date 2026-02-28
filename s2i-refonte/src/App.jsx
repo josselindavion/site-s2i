@@ -5,8 +5,9 @@ import CourseCard from './components/CourseCard';
 import CoursePage from './pages/CoursePage';
 import LaboPage from './pages/LaboPage';
 import TipePage from './pages/TipePage'; 
-import JournalPage from './pages/JournalPage'; // 1. Import du Carnet de bord
-import { BookOpen, Cpu, FlaskConical, Database, Lightbulb, Activity } from 'lucide-react'; // 2. Ajout Activity
+import JournalPage from './pages/JournalPage';
+import ArchivesPage from './pages/ArchivesPage'; // <--- Import ajouté
+import { BookOpen, Cpu, FlaskConical, Database, Lightbulb, Activity } from 'lucide-react';
 
 const Home = () => (
   <main className="max-w-6xl mx-auto px-6 py-20">
@@ -33,9 +34,9 @@ const Home = () => (
       </div>
     </div>
 
-    {/* Grille de Navigation Mise à jour (6 cartes) */}
+    {/* Grille de Navigation (6 cartes) */}
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <Link to="/journal"> {/* 3. Nouvelle Carte Journal */}
+      <Link to="/journal">
         <CourseCard title="Carnet de bord" description="Suivi quotidien des séances et activités." Icon={Activity} />
       </Link>
       <Link to="/course/pcsi">
@@ -70,10 +71,14 @@ const AnimatedRoutes = () => {
       >
         <Routes location={location}>
           <Route path="/" element={<Home />} />
+          
+          {/* Routes de cours */}
+          <Route path="/course/archives" element={<ArchivesPage />} /> {/* <--- Route ajoutée ici */}
           <Route path="/course/:id" element={<CoursePage />} />
+          
           <Route path="/labo" element={<LaboPage />} />
           <Route path="/tipe" element={<TipePage />} />
-          <Route path="/journal" element={<JournalPage />} /> {/* 4. Nouvelle Route */}
+          <Route path="/journal" element={<JournalPage />} />
         </Routes>
       </motion.div>
     </AnimatePresence>

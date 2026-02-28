@@ -10,7 +10,7 @@ import {
 // --- DONNÉES DU DASHBOARD ---
 const DASHBOARD_DATA = {
   PCSI: {
-    semaineColle: 20, // Numéro de la semaine ajouté
+    semaineColle: 20, 
     programmeColle: ["S.L.C.I : Schémas Blocs", "Cinématique : Vecteur rotation", "Statique : Modélisation des actions"],
     cours: [{ name: "S.L.C.I - Schémas Blocs", type: "PDF", category: "Cours" }],
     td: [{ name: "TD 04 : Drone civil", type: "PDF", category: "TD", hasCorrection: true }],
@@ -21,7 +21,7 @@ const DASHBOARD_DATA = {
     ]
   },
   MPSI: {
-    semaineColle: 19, // Numéro de la semaine ajouté
+    semaineColle: 19, 
     programmeColle: ["Logique combinatoire", "Liaisons mécaniques"],
     cours: [{ name: "Logique & Algèbre de Boole", type: "PDF", category: "Cours" }],
     td: [{ name: "TD 05 : Liaisons mécaniques", type: "PDF", category: "TD", hasCorrection: true }],
@@ -113,11 +113,16 @@ export default function JournalPage() {
               </ul>
             </div>
 
-            <button className="w-full bg-indigo-600 rounded-2xl p-6 text-white flex flex-col gap-4 hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 group">
-              <ClipboardCheck size={28} />
+            {/* BOUTON QUIZZ - VERSION AFFINÉE */}
+            <button className="w-full bg-white border border-indigo-100 rounded-2xl p-4 flex items-center gap-4 hover:bg-indigo-50 transition-all shadow-sm group">
+              <div className="bg-indigo-600 text-white p-2.5 rounded-xl shadow-md shadow-indigo-100">
+                <ClipboardCheck size={20} />
+              </div>
               <div className="text-left">
-                <span className="block font-black text-lg uppercase tracking-tight">Quizz Hebdo</span>
-                <span className="text-indigo-200 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">S'auto-évaluer <ArrowRight size={12} /></span>
+                <span className="block font-bold text-gray-900 text-sm uppercase tracking-tight">Quizz Hebdo</span>
+                <span className="text-indigo-500 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5">
+                  S'auto-évaluer <ArrowRight size={10} className="group-hover:translate-x-0.5 transition-transform" />
+                </span>
               </div>
             </button>
           </div>

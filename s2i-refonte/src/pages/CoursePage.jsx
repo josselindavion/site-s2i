@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion'; // Pour l'animation fluide
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronLeft, Book, FileText, Download, 
   Zap, CheckCircle2, History, Settings, CheckSquare, ChevronDown 
@@ -35,7 +35,6 @@ const COURSE_DATA = {
   }
 };
 
-// --- COMPOSANT COLONNE (Inchangé) ---
 const ResourceColumn = ({ title, icon: Icon, resources, colorClass, bgColor }) => (
   <div className="flex flex-col gap-4">
     <div className={`flex items-center gap-2 px-4 py-2 rounded-lg ${bgColor} ${colorClass} w-full border border-current opacity-80 mb-2`}>
@@ -54,11 +53,25 @@ const ResourceColumn = ({ title, icon: Icon, resources, colorClass, bgColor }) =
             <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-tighter">
               <span className="bg-gray-50 px-1.5 py-0.5 rounded">{res.type}</span>
             </div>
-            {res.category === "TD" && res.hasCorrection && (
-              <button className="flex items-center gap-1.5 text-emerald-600 hover:text-emerald-700 font-semibold text-[11px] transition-all group/corrige hover:translate-x-0.5 border border-emerald-100 bg-emerald-50/50 px-2 py-1 rounded-lg">
-                <CheckSquare size={13} className="shrink-0" /> Corrigé
-              </button>
-            )}
+            
+            <div className="flex gap-2">
+              {res.category === "TD" && res.hasCorrection && (
+                <button className="flex items-center gap-1.5 text-emerald-600 hover:text-emerald-700 font-bold text-[11px] transition-all hover:-translate-y-0.5 hover:shadow-sm border border-emerald-100 bg-emerald-50/50 px-3 py-1.5 rounded-lg active:scale-95 uppercase tracking-tight">
+                  <CheckSquare size={13} className="shrink-0" /> Corrigé
+                </button>
+              )}
+              
+              {res.category === "TP" && (
+                <>
+                  <button className="flex items-center font-black text-xs text-blue-600 hover:text-blue-700 border border-blue-100 bg-blue-50/50 px-3 py-1.5 rounded-lg transition-all hover:-translate-y-0.5 hover:shadow-sm hover:bg-blue-100/50 active:scale-95 uppercase tracking-tighter">
+                    DT
+                  </button>
+                  <button className="flex items-center font-black text-xs text-indigo-600 hover:text-indigo-700 border border-indigo-100 bg-indigo-50/50 px-3 py-1.5 rounded-lg transition-all hover:-translate-y-0.5 hover:shadow-sm hover:bg-indigo-100/50 active:scale-95 uppercase tracking-tighter">
+                    DR
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       ))}
@@ -66,9 +79,8 @@ const ResourceColumn = ({ title, icon: Icon, resources, colorClass, bgColor }) =
   </div>
 );
 
-// --- NOUVEAU COMPOSANT SECTION DE CYCLE (Avec Accordéon) ---
 const CycleSection = ({ cycle }) => {
-  const [isOpen, setIsOpen] = useState(false); // État pour gérer l'ouverture
+  const [isOpen, setIsOpen] = useState(false);
 
   const cours = cycle.resources.filter(r => r.category === "Cours");
   const tds = cycle.resources.filter(r => r.category === "TD");
@@ -76,20 +88,13 @@ const CycleSection = ({ cycle }) => {
 
   return (
     <section className="border-b border-gray-100 pb-12 last:border-0">
-      {/* Header cliquable pour déplier */}
-      <div 
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex flex-col cursor-pointer group mb-4"
-      >
+      <div onClick={() => setIsOpen(!isOpen)} className="flex flex-col cursor-pointer group mb-4">
         <div className="flex items-center gap-3 mb-2">
           <div className="bg-indigo-600 text-white px-3 py-1 rounded-md text-xs font-black tracking-[0.2em] uppercase">
             Cycle {cycle.id}
           </div>
           <div className="h-[1px] flex-grow bg-gray-100 group-hover:bg-indigo-200 transition-colors"></div>
-          <motion.div
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            className="text-gray-400 group-hover:text-indigo-600 transition-colors"
-          >
+          <motion.div animate={{ rotate: isOpen ? 180 : 0 }} className="text-gray-400 group-hover:text-indigo-600 transition-colors">
             <ChevronDown size={24} />
           </motion.div>
         </div>
@@ -98,34 +103,25 @@ const CycleSection = ({ cycle }) => {
         </h2>
       </div>
 
-      {/* Contenu qui se déplie */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden"
-          >
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }} className="overflow-hidden">
             <div className="pt-6">
-              {/* Actions Rapides */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
-                <a href={cycle.actions.synthese} className="flex items-center gap-3 bg-white border border-gray-100 p-4 rounded-2xl hover:border-indigo-200 transition-all group">
+                <a href={cycle.actions.synthese} className="flex items-center gap-3 bg-white border border-gray-100 p-4 rounded-2xl hover:border-indigo-200 transition-all group shadow-sm hover:shadow-md">
                   <div className="bg-indigo-50 p-2 rounded-lg text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all"><Zap size={18} fill="currentColor" /></div>
                   <span className="font-bold text-gray-900 text-sm">Synthèse</span>
                 </a>
-                <a href={cycle.actions.quizz} className="flex items-center gap-3 bg-white border border-gray-100 p-4 rounded-2xl hover:border-emerald-200 transition-all group">
+                <a href={cycle.actions.quizz} className="flex items-center gap-3 bg-white border border-gray-100 p-4 rounded-2xl hover:border-emerald-200 transition-all group shadow-sm hover:shadow-md">
                   <div className="bg-emerald-50 p-2 rounded-lg text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-all"><CheckCircle2 size={18} /></div>
                   <span className="font-bold text-gray-900 text-sm">Quizz</span>
                 </a>
-                <a href={cycle.actions.annales} className="flex items-center gap-3 bg-white border border-gray-100 p-4 rounded-2xl hover:border-amber-200 transition-all group">
+                <a href={cycle.actions.annales} className="flex items-center gap-3 bg-white border border-gray-100 p-4 rounded-2xl hover:border-amber-200 transition-all group shadow-sm hover:shadow-md">
                   <div className="bg-amber-50 p-2 rounded-lg text-amber-600 group-hover:bg-amber-600 group-hover:text-white transition-all"><History size={18} /></div>
                   <span className="font-bold text-gray-900 text-sm">Annales</span>
                 </a>
               </div>
 
-              {/* Grille 3 colonnes */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <ResourceColumn title="Cours" icon={Book} resources={cours} colorClass="text-blue-600" bgColor="bg-blue-50/50" />
                 <ResourceColumn title="Travaux Dirigés" icon={FileText} resources={tds} colorClass="text-orange-600" bgColor="bg-orange-50/50" />
