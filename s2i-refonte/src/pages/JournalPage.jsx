@@ -78,7 +78,7 @@ export default function JournalPage() {
               <ChevronLeft size={18} className="mr-1 group-hover:-translate-x-1 transition-transform" /> Retour à l'accueil
             </Link>
             <h1 className="text-5xl font-black text-gray-900 tracking-tight uppercase">Dashboard</h1>
-            <p className="text-gray-500 mt-2 text-lg italic font-medium">Suivi des activités et ressources en temps réel.</p>
+            <p className="text-gray-500 mt-2 text-lg italic font-medium">Suivi des cours, TD et TP de la semaine</p>
           </div>
           
           <div className="flex bg-white p-1.5 rounded-2xl border border-gray-100 shadow-sm">

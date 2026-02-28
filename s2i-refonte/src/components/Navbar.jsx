@@ -17,22 +17,29 @@ export default function Navbar() {
 
       {/* Menu de navigation central */}
       <div className="hidden lg:flex gap-10 text-[13px] font-black text-gray-500 uppercase tracking-wider">
-        <Link to="/journal" className="hover:text-indigo-600 transition-colors">Journal</Link>
-        <Link to="/course/pcsi" className="hover:text-indigo-600 transition-colors">Filière PCSI</Link>
-        <Link to="/course/mpsi" className="hover:text-indigo-600 transition-colors">MPSI / MP</Link>
+        <Link to="/journal" className="hover:text-indigo-600 transition-colors">Dashboard</Link>
+        <Link to="/course/pcsi" className="hover:text-indigo-600 transition-colors">PCSI</Link>
+        <Link to="/course/mpsi" className="hover:text-indigo-600 transition-colors">MPSI</Link>
         <Link to="/labo" className="hover:text-indigo-600 transition-colors">Laboratoire</Link>
         <Link to="/tipe" className="hover:text-indigo-600 transition-colors">TIPE</Link>
         <Link to="/course/archives" className="hover:text-indigo-600 transition-colors">Archives</Link>
       </div>
 
-      {/* Logo Lakanal à Droite */}
+      {/* Logo Lakanal cliquable à Droite */}
       <div className="flex items-center gap-6">
         <div className="hidden md:block">
-          <img 
-            src="https://upload.wikimedia.org/wikipedia/fr/b/bd/Logo_Lyc%C3%A9e_Lakanal.png" 
-            alt="Logo Lycée Lakanal" 
-            className="h-12 w-auto object-contain grayscale hover:grayscale-0 transition-all opacity-80 hover:opacity-100"
-          />
+          <a 
+            href="https://www.citescolairelakanal.fr/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="block"
+          >
+            <img 
+              src="/logo-lakanal.jpg" 
+              alt="Site officiel Lakanal" 
+              className="h-12 w-auto object-contain grayscale hover:grayscale-0 transition-all opacity-80 hover:opacity-100 cursor-pointer"
+            />
+          </a>
         </div>
         
         {/* Menu Mobile */}
