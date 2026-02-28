@@ -4,10 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronLeft, FileText, CheckSquare, Trophy, 
   Landmark, GraduationCap, Calendar, Download,
-  TrendingUp, Award, BarChart3
+  TrendingUp, Award, BarChart3, Star, ChevronDown 
 } from 'lucide-react';
 
-// --- DONNÉES SIMULÉES ---
+// --- DONNÉES ENRICHIES ---
 const ARCHIVES_DS = [
   {
     year: "2024 - 2025",
@@ -27,17 +27,17 @@ const ARCHIVES_DS = [
 
 const CONCOURS_DATA = {
   "X / ENS": [
-    { year: 2024, name: "Sujet SI : Robotique chirurgicale", hasCorr: true },
-    { year: 2023, name: "Sujet SI : Drone de surveillance", hasCorr: true },
+    { year: 2024, name: "Sujet SI : Robotique chirurgicale", hasCorr: true, complexity: 5 },
+    { year: 2023, name: "Sujet SI : Drone de surveillance", hasCorr: true, complexity: 4 },
   ],
   "Mines-Ponts": [
-    { year: 2024, name: "Sujet SI : Système de freinage TGV", hasCorr: true },
+    { year: 2024, name: "Sujet SI : Système de freinage TGV", hasCorr: true, complexity: 4 },
   ],
   "Centrale-Supélec": [
-    { year: 2024, name: "Sujet SI : Télescope spatial", hasCorr: true },
+    { year: 2024, name: "Sujet SI : Télescope spatial", hasCorr: true, complexity: 3 },
   ],
   "CCINP": [
-    { year: 2024, name: "Sujet SI : Pompe à insuline", hasCorr: true },
+    { year: 2024, name: "Sujet SI : Pompe à insuline", hasCorr: true, complexity: 2 },
   ]
 };
 
@@ -49,13 +49,14 @@ const LAKANAL_RESULTS = [
 
 export default function ArchivesPage() {
   const [activeTab, setActiveTab] = useState('ds');
+  const [openBank, setOpenBank] = useState(null); // État pour l'accordéon des concours
 
   return (
     <div className="min-h-screen bg-[#F9FAFB]">
       <div className="max-w-7xl mx-auto px-6 py-12">
         
         {/* Header */}
-        <div className="mb-12">
+        <div className="mb-12 text-left">
           <Link to="/" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-indigo-600 mb-8 transition-colors group">
             <ChevronLeft size={18} className="mr-1 group-hover:-translate-x-1 transition-transform" /> Retour à l'accueil
           </Link>
@@ -95,7 +96,7 @@ export default function ArchivesPage() {
             transition={{ duration: 0.2 }}
           >
             
-            {/* --- SECTION DS --- */}
+            {/* --- SECTION DS (Inchangée) --- */}
             {activeTab === 'ds' && (
               <div className="space-y-12 text-left">
                 {ARCHIVES_DS.map((yearSection, idx) => (
@@ -113,12 +114,8 @@ export default function ArchivesPage() {
                             <h4 className="font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">{ds.name}</h4>
                           </div>
                           <div className="flex gap-2">
-                            <button className="flex items-center gap-1.5 bg-gray-50 text-gray-500 px-3 py-2 rounded-lg text-[10px] font-black uppercase hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-transparent hover:border-indigo-100">
-                              Sujet
-                            </button>
-                            <button className="flex items-center gap-1.5 bg-emerald-50 text-emerald-600 px-3 py-2 rounded-lg text-[10px] font-black uppercase hover:bg-emerald-600 hover:text-white transition-all border border-emerald-100">
-                              Corrigé
-                            </button>
+                            <button className="flex items-center gap-1.5 bg-gray-50 text-gray-500 px-3 py-2 rounded-lg text-[10px] font-black uppercase hover:bg-indigo-50 hover:text-indigo-600 transition-all border border-transparent hover:border-indigo-100">Sujet</button>
+                            <button className="flex items-center gap-1.5 bg-emerald-50 text-emerald-600 px-3 py-2 rounded-lg text-[10px] font-black uppercase hover:bg-emerald-600 hover:text-white transition-all border border-emerald-100">Corrigé</button>
                           </div>
                         </div>
                       ))}
@@ -128,37 +125,80 @@ export default function ArchivesPage() {
               </div>
             )}
 
-            {/* --- SECTION CONCOURS --- */}
+            {/* --- SECTION CONCOURS (Accordéon + Étoiles) --- */}
             {activeTab === 'concours' && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-left">
-                {Object.keys(CONCOURS_DATA).map((bank) => (
-                  <div key={bank} className="bg-white border border-gray-100 rounded-[2rem] p-8 shadow-sm">
-                    <h3 className="text-xl font-black text-indigo-600 mb-6 uppercase tracking-tighter flex items-center gap-2">
-                      <Landmark size={20} /> Banque {bank}
-                    </h3>
-                    <div className="space-y-3">
-                      {CONCOURS_DATA[bank].map((sujet, i) => (
-                        <div key={i} className="flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 border border-transparent hover:border-gray-100 transition-all">
-                          <div className="flex items-center gap-4">
-                            <span className="font-mono text-sm font-bold text-gray-400">{sujet.year}</span>
-                            <span className="font-bold text-gray-700 text-sm">{sujet.name}</span>
+              <div className="grid grid-cols-1 gap-6 text-left max-w-4xl mx-auto lg:mx-0">
+                {Object.keys(CONCOURS_DATA).map((bank) => {
+                  const isExpanded = openBank === bank;
+                  return (
+                    <div key={bank} className="bg-white border border-gray-100 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-md transition-all">
+                      <button 
+                        onClick={() => setOpenBank(isExpanded ? null : bank)}
+                        className="w-full flex items-center justify-between p-8 text-left group"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className={`p-3 rounded-2xl transition-all ${isExpanded ? 'bg-indigo-600 text-white rotate-12 shadow-lg shadow-indigo-100' : 'bg-indigo-50 text-indigo-600'}`}>
+                            <Landmark size={24} />
                           </div>
-                          <div className="flex gap-2">
-                            <button className="p-2 text-gray-400 hover:text-indigo-600 transition-colors" title="Sujet"><FileText size={18} /></button>
-                            <button className="p-2 text-gray-400 hover:text-emerald-600 transition-colors" title="Corrigé"><CheckSquare size={18} /></button>
+                          <div>
+                            <h3 className={`text-xl font-black uppercase tracking-tighter transition-colors ${isExpanded ? 'text-indigo-600' : 'text-gray-900'}`}>
+                              Banque {bank}
+                            </h3>
+                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{CONCOURS_DATA[bank].length} sujets disponibles</span>
                           </div>
                         </div>
-                      ))}
+                        <motion.div animate={{ rotate: isExpanded ? 180 : 0 }} className="text-gray-300 group-hover:text-indigo-600 transition-colors">
+                          <ChevronDown size={28} />
+                        </motion.div>
+                      </button>
+
+                      <AnimatePresence>
+                        {isExpanded && (
+                          <motion.div 
+                            initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-8 pb-8 space-y-3">
+                              <div className="h-[1px] bg-gray-50 mb-6 w-full"></div>
+                              {CONCOURS_DATA[bank].map((sujet, i) => (
+                                <div key={i} className="flex items-center justify-between p-5 rounded-[1.5rem] bg-gray-50/50 border border-transparent hover:border-indigo-100 hover:bg-white transition-all group">
+                                  <div className="flex flex-col gap-1.5">
+                                    <div className="flex items-center gap-3">
+                                      <span className="font-mono text-sm font-black text-indigo-400">{sujet.year}</span>
+                                      <span className="font-bold text-gray-800 text-sm">{sujet.name}</span>
+                                    </div>
+                                    {/* Notation Étoiles */}
+                                    <div className="flex items-center gap-1 text-amber-400">
+                                      {[...Array(5)].map((_, starIndex) => (
+                                        <Star 
+                                          key={starIndex} 
+                                          size={12} 
+                                          fill={starIndex < sujet.complexity ? "currentColor" : "transparent"} 
+                                          className={starIndex < sujet.complexity ? "" : "text-gray-200"}
+                                        />
+                                      ))}
+                                      <span className="text-[8px] font-black uppercase text-gray-400 ml-2 tracking-tighter">Complexité</span>
+                                    </div>
+                                  </div>
+                                  <div className="flex gap-2">
+                                    <button className="p-3 bg-white border border-gray-100 rounded-xl text-gray-400 hover:text-indigo-600 hover:border-indigo-100 shadow-sm transition-all" title="Sujet"><FileText size={18} /></button>
+                                    <button className="p-3 bg-white border border-gray-100 rounded-xl text-gray-400 hover:text-emerald-600 hover:border-emerald-100 shadow-sm transition-all" title="Corrigé"><CheckSquare size={18} /></button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
 
-            {/* --- SECTION RÉSULTATS --- */}
+            {/* --- SECTION RÉSULTATS (Inchangée) --- */}
             {activeTab === 'results' && (
-              <div className="space-y-8">
-                {/* Stats Cards */}
+              <div className="space-y-8 text-left">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm text-center">
                     <BarChart3 className="mx-auto text-indigo-600 mb-4" size={32} />
@@ -177,7 +217,6 @@ export default function ArchivesPage() {
                   </div>
                 </div>
 
-                {/* Tableau de bord détaillé */}
                 <div className="bg-white border border-gray-100 rounded-[2.5rem] overflow-hidden shadow-sm">
                   <table className="w-full text-left border-collapse">
                     <thead>
